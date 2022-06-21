@@ -1,27 +1,17 @@
-const generatePage = require('./src/page-template.js');
+import fetch from ('inquirer');
 
-const fs = require('fs');
+console.log(inquirer);
 
-const profileDataArgs = process.argv.slice(2, process.argv.length);
+// const generatePage = require('./src/page-template.js');
 
-const [name, github] = profileDataArgs;
+// const fs = require('fs');
 
-fs.writeFile('index.html', generatePage(name, github), err =>{
-    if (err) throw new Error(err);
+// const pageHTML = generatePage(name, github);
 
-    console.log('Portfolio complete! Check out index.html to see the output!');
-});
+// const [name, github] = profileDataArgs;
 
-// const printProfileData = profileDataArr => {
+// fs.writeFile('index.html', pageHTML, err =>{
+//     if (err) throw err;
 
-//     for (let i = 0; i < profileDataArr.length; i += 1) {
-//         console.log(profileDataArr[i]);
-//     }
-
-
-//     console.log('=============');
-
-//     profileDataArr.forEach(profileItem => console.log(profileItem));
-// };
-
-// printProfileData(profileDataArgs);
+//     console.log('Portfolio complete! Check out index.html to see the output!');
+// });
