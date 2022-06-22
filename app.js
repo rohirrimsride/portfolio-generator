@@ -1,6 +1,16 @@
-import fetch from ('inquirer');
+const inquirer = await import('inquirer');
 
 console.log(inquirer);
+
+inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'What is your name?'
+        }
+    ])
+    .then(answers => console.log(answers));
 
 // const generatePage = require('./src/page-template.js');
 
