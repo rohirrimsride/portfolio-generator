@@ -1,4 +1,4 @@
-const inquirer = await import('inquirer');
+const inquirer = require('inquirer');
 
 console.log(inquirer);
 
