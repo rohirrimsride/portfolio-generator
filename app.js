@@ -1,6 +1,6 @@
+// const fs = require('fs');
 const inquirer = require('inquirer');
-
-console.log(inquirer);
+// const generatePage = require('./src/page-template.js');
 
 const promptUser = () => {
     return inquirer.prompt([
@@ -31,26 +31,36 @@ const promptUser = () => {
             }
         },
         {
+            type: 'confirm',
+            name: 'confirmAbout',
+            message: 'Would you like to enter some information about yourself for an "About" section?',
+            default: true
+        },
+        {
             type: 'input',
             name: 'about',
-            message: 'Provide some information about yourself:'
+            message: 'Provide some information about yourself:',
+            when: ({confirmAbout}) => {
+                if (confirmAbout) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     ]);
 };
 
 const promptProject = portfolioData => {
-
-    // If there's no 'projects' array property, create one 
-    if (!portfolioData.projects) {
-        portfolioData.projects = [];
-    }
-
     console.log(`
     =================
     Add a New Project
     =================
     `);
-
+    // If there's no 'projects' array property, create one 
+    if (!portfolioData.projects) {
+        portfolioData.projects = [];
+    }
     return inquirer.prompt([
         {
             type: 'input',
@@ -85,14 +95,14 @@ const promptProject = portfolioData => {
             choices: ['Javascript', 'HTML', 'CSS', 'ES6', 'jQuery', 'Bootstrap', 'Node']
         },
         {
-            type: 'link',
+            type: 'input',
             name: 'link',
             message: 'Enter the GitHub link to your project. (Required)',
-            validate: linkLink => {
-                if (linkLink) {
+            validate: linkInput => {
+                if (linkInput) {
                     return true;
                 } else {
-                    console.log('Please enter the project link!');
+                    console.log('Please enter the project GitHub link!');
                     return false;
                 }
             }
@@ -109,17 +119,15 @@ const promptProject = portfolioData => {
             message: 'Would you like to enter another project?',
             default: false
         }
-        .then(projectData => {
-            portfolioData.projects.push(projectData);
-            if (projectData.confirmAddProject) {
-                return promptProject(portfolioData);
-            } else {
-                return portfolioData;
-            }
-        })
-        
-    ]);
-    
+    ])
+    .then(projectData => {
+        portfolioData.projects.push(projectData);
+        if (projectData.confirmAddProject) {
+            return promptProject(portfolioData);
+        } else {
+            return portfolioData;
+        }
+    });  
 };
 
 
@@ -131,9 +139,7 @@ promptUser()
     
 
 
-// const generatePage = require('./src/page-template.js');
 
-// const fs = require('fs');
 
 // const pageHTML = generatePage(name, github);
 
